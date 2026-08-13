@@ -1,7 +1,21 @@
+"use client";
+
+import { useEffect, useRef } from "react";
 import Link from "next/link";
 import { CheckCircle } from "lucide-react";
+import { useCart } from "../lib/cart-context";
 
 export default function SuccessPage() {
+  const { clearCart, isLoaded } = useCart();
+  const hasCleared = useRef(false);
+
+  useEffect(() => {
+    if (isLoaded && !hasCleared.current) {
+      clearCart();
+      hasCleared.current = true;
+    }
+  }, [isLoaded, clearCart]);
+
   return (
     <main className="container-x py-24 text-center">
       <CheckCircle size={64} className="text-emerald-500 mx-auto mb-6" />
