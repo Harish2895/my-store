@@ -1,34 +1,19 @@
 import Link from "next/link";
 import { ShoppingBag, Truck, ShieldCheck, Star } from "lucide-react";
+import { supabase } from "./lib/supabase";
 
-const products = [
-  {
-    id: 1,
-    name: "Minimalist Leather Backpack",
-    price: 89.99,
-    image: "https://images.unsplash.com/photo-1553062407-98eeb64c6a62?w=600&q=80",
-  },
-  {
-    id: 2,
-    name: "Wireless Noise-Cancelling Headphones",
-    price: 129.99,
-    image: "https://images.unsplash.com/photo-1505740420928-5e560c06d30e?w=600&q=80",
-  },
-  {
-    id: 3,
-    name: "Ceramic Pour-Over Coffee Set",
-    price: 44.99,
-    image: "https://images.unsplash.com/photo-1495474472287-4d71bcdd2085?w=600&q=80",
-  },
-  {
-    id: 4,
-    name: "Smart Fitness Watch",
-    price: 199.99,
-    image: "https://images.unsplash.com/photo-1523275335684-37898b6baf30?w=600&q=80",
-  },
-];
+async function getProducts() {
+  const { data, error } = await supabase.from("products").select("*");
+  if (error) {
+    console.error("Error fetching products:", error);
+    return [];
+  }
+  return data;
+}
 
-export default function Home() {
+export default async function Home() {
+  const products = await getProducts();
+
   return (
     <main>
       <header className="sticky top-0 z-50 bg-white/80 backdrop-blur border-b border-gray-200">
@@ -79,21 +64,26 @@ export default function Home() {
 
       <section id="shop" className="container-x py-20">
         <h2 className="text-2xl md:text-3xl font-bold mb-10 text-center">Featured Products</h2>
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
-          {products.map((product) => (
-            <Link key={product.id} href={`/product/${product.id}`} className="group block">
-              <div className="aspect-square overflow-hidden rounded-2xl bg-gray-100 mb-4">
-                <img
-                  src={product.image}
-                  alt={product.name}
-                  className="w-full h-full object-cover group-hover:scale-105 transition duration-300"
-                />
-              </div>
-              <h3 className="font-medium text-gray-900">{product.name}</h3>
-              <p className="text-gray-500">${product.price}</p>
-            </Link>
-          ))}
-        </div>
+
+        {products.length === 0 ? (
+          <p className="text-center text-gray-500">No products found. Add some in Supabase!</p>
+        ) : (
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
+            {products.map((product) => (
+              <Link key={product.id} href={`/product/${product.id}`} className="group block">
+                <div className="aspect-square overflow-hidden rounded-2xl bg-gray-100 mb-4">
+                  <img
+                    src={product.image}
+                    alt={product.name}
+                    className="w-full h-full object-cover group-hover:scale-105 transition duration-300"
+                  />
+                </div>
+                <h3 className="font-medium text-gray-900">{product.name}</h3>
+                <p className="text-gray-500">${product.price}</p>
+              </Link>
+            ))}
+          </div>
+        )}
       </section>
 
       <footer className="bg-gray-900 text-gray-400 py-12">
