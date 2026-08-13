@@ -3,9 +3,34 @@
 import { useCart } from "../lib/cart-context";
 import Link from "next/link";
 import { Trash2, ArrowLeft } from "lucide-react";
+import { useState } from "react";
 
 export default function CartPage() {
   const { items, removeFromCart, updateQuantity, totalPrice } = useCart();
+  const [loading, setLoading] = useState(false);
+
+  async function handleCheckout() {
+    setLoading(true);
+    try {
+      const response = await fetch("/api/checkout", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ items }),
+      });
+      const data = await response.json();
+
+      if (data.url) {
+        window.location.href = data.url;
+      } else {
+        alert("Something went wrong starting checkout.");
+        setLoading(false);
+      }
+    } catch (error) {
+      console.error(error);
+      alert("Something went wrong starting checkout.");
+      setLoading(false);
+    }
+  }
 
   if (items.length === 0) {
     return (
@@ -71,8 +96,12 @@ export default function CartPage() {
 
       <div className="flex justify-between items-center border-t border-gray-200 pt-6">
         <span className="text-xl font-bold">Total: ${totalPrice.toFixed(2)}</span>
-        <button className="bg-emerald-500 hover:bg-emerald-400 text-white font-semibold px-8 py-3 rounded-full transition">
-          Checkout
+        <button
+          onClick={handleCheckout}
+          disabled={loading}
+          className="bg-emerald-500 hover:bg-emerald-400 disabled:opacity-50 text-white font-semibold px-8 py-3 rounded-full transition"
+        >
+          {loading ? "Redirecting..." : "Checkout"}
         </button>
       </div>
     </main>
