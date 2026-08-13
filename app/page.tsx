@@ -1,69 +1,107 @@
-import Image from "next/image";
+import Link from "next/link";
+import { ShoppingBag, Truck, ShieldCheck, Star } from "lucide-react";
+
+const products = [
+  {
+    id: 1,
+    name: "Minimalist Leather Backpack",
+    price: 89.99,
+    image: "https://images.unsplash.com/photo-1553062407-98eeb64c6a62?w=600&q=80",
+  },
+  {
+    id: 2,
+    name: "Wireless Noise-Cancelling Headphones",
+    price: 129.99,
+    image: "https://images.unsplash.com/photo-1505740420928-5e560c06d30e?w=600&q=80",
+  },
+  {
+    id: 3,
+    name: "Ceramic Pour-Over Coffee Set",
+    price: 44.99,
+    image: "https://images.unsplash.com/photo-1495474472287-4d71bcdd2085?w=600&q=80",
+  },
+  {
+    id: 4,
+    name: "Smart Fitness Watch",
+    price: 199.99,
+    image: "https://images.unsplash.com/photo-1523275335684-37898b6baf30?w=600&q=80",
+  },
+];
 
 export default function Home() {
   return (
-    <div className="flex flex-col flex-1 items-center justify-center bg-zinc-50 font-sans dark:bg-black">
-      <main className="flex flex-1 w-full max-w-3xl flex-col items-center justify-between py-32 px-16 bg-white dark:bg-black sm:items-start">
-        <Image
-          className="dark:invert h-5 w-[100px]"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={100}
-          height={20}
-          priority
-        />
-        <div className="flex flex-col items-center gap-6 text-center sm:items-start sm:text-left">
-          <h1 className="max-w-xs text-3xl font-semibold leading-10 tracking-tight text-black dark:text-zinc-50">
-            To get started, edit the{" "}
-            <code className="rounded bg-black/[.06] px-1.5 py-0.5 font-mono text-[0.9em] dark:bg-white/[.08]">
-              page.tsx
-            </code>{" "}
-            file.
+    <main>
+      <header className="sticky top-0 z-50 bg-white/80 backdrop-blur border-b border-gray-200">
+        <div className="container-x flex items-center justify-between h-16">
+          <span className="text-xl font-bold tracking-tight">Aurora</span>
+          <nav className="hidden md:flex gap-8 text-sm font-medium text-gray-600">
+            <a href="#shop" className="hover:text-black">Shop</a>
+            <a href="#" className="hover:text-black">About</a>
+            <a href="#" className="hover:text-black">Contact</a>
+          </nav>
+          <button className="relative">
+            <ShoppingBag size={22} />
+            <span className="absolute -top-2 -right-2 bg-emerald-500 text-white text-xs rounded-full w-4 h-4 flex items-center justify-center">0</span>
+          </button>
+        </div>
+      </header>
+
+      <section className="bg-gray-900 text-white">
+        <div className="container-x py-24 md:py-32 text-center">
+          <h1 className="text-4xl md:text-6xl font-bold tracking-tight mb-6">
+            Everyday essentials, designed to last.
           </h1>
-          <p className="max-w-md text-lg leading-8 text-zinc-600 dark:text-zinc-400">
-            Looking for a starting point or more instructions? Head over to{" "}
-            <a
-              href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Templates
-            </a>{" "}
-            or the{" "}
-            <a
-              href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Learning
-            </a>{" "}
-            center.
+          <p className="text-gray-300 text-lg max-w-xl mx-auto mb-8">
+            Thoughtfully made products for modern living. Free shipping over $50.
           </p>
-        </div>
-        <div className="flex flex-col gap-4 text-base font-medium sm:flex-row">
-          <a
-            className="flex h-12 w-full items-center justify-center gap-2 rounded-full bg-foreground px-5 text-background transition-colors hover:bg-[#383838] dark:hover:bg-[#ccc] md:w-[158px]"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert h-[14px] w-4"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={16}
-              height={14}
-            />
-            Deploy Now
-          </a>
-          <a
-            className="flex h-12 w-full items-center justify-center rounded-full border border-solid border-black/[.08] px-5 transition-colors hover:border-transparent hover:bg-black/[.04] dark:border-white/[.145] dark:hover:bg-[#1a1a1a] md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Documentation
+          <a href="#shop" className="inline-block bg-emerald-500 hover:bg-emerald-400 text-white font-semibold px-8 py-3 rounded-full transition">
+            Shop the Collection
           </a>
         </div>
-      </main>
-    </div>
+      </section>
+
+      <section className="border-b border-gray-200 bg-white">
+        <div className="container-x py-8 grid grid-cols-1 md:grid-cols-3 gap-6 text-center">
+          <div className="flex flex-col items-center gap-2">
+            <Truck size={26} className="text-emerald-500" />
+            <p className="text-sm font-medium">Free shipping over $50</p>
+          </div>
+          <div className="flex flex-col items-center gap-2">
+            <ShieldCheck size={26} className="text-emerald-500" />
+            <p className="text-sm font-medium">Secure checkout</p>
+          </div>
+          <div className="flex flex-col items-center gap-2">
+            <Star size={26} className="text-emerald-500" />
+            <p className="text-sm font-medium">Rated 4.9/5 by customers</p>
+          </div>
+        </div>
+      </section>
+
+      <section id="shop" className="container-x py-20">
+        <h2 className="text-2xl md:text-3xl font-bold mb-10 text-center">Featured Products</h2>
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
+          {products.map((product) => (
+            <Link key={product.id} href={`/product/${product.id}`} className="group block">
+              <div className="aspect-square overflow-hidden rounded-2xl bg-gray-100 mb-4">
+                <img
+                  src={product.image}
+                  alt={product.name}
+                  className="w-full h-full object-cover group-hover:scale-105 transition duration-300"
+                />
+              </div>
+              <h3 className="font-medium text-gray-900">{product.name}</h3>
+              <p className="text-gray-500">${product.price}</p>
+            </Link>
+          ))}
+        </div>
+      </section>
+
+      <footer className="bg-gray-900 text-gray-400 py-12">
+        <div className="container-x text-center text-sm">
+          <p className="text-white font-bold text-lg mb-2">Aurora</p>
+          <p>© 2026 Aurora Store. All rights reserved.</p>
+        </div>
+      </footer>
+    </main>
   );
 }
