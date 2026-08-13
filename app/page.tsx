@@ -1,6 +1,7 @@
 import Link from "next/link";
-import { ShoppingBag, Truck, ShieldCheck, Star } from "lucide-react";
+import { Truck, ShieldCheck, Star } from "lucide-react";
 import { supabase } from "./lib/supabase";
+import CartButton from "./components/CartButton";
 
 async function getProducts() {
   const { data, error } = await supabase.from("products").select("*");
@@ -24,10 +25,7 @@ export default async function Home() {
             <a href="#" className="hover:text-black">About</a>
             <a href="#" className="hover:text-black">Contact</a>
           </nav>
-          <button className="relative">
-            <ShoppingBag size={22} />
-            <span className="absolute -top-2 -right-2 bg-emerald-500 text-white text-xs rounded-full w-4 h-4 flex items-center justify-center">0</span>
-          </button>
+          <CartButton />
         </div>
       </header>
 
